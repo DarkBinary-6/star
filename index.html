@@ -166,13 +166,13 @@ body::after {
   align-items: center;
   justify-content: center;
   font-family: var(--font-display);
-  font-size: clamp(1.8rem, 4.8vw, 4rem);
+  font-size: clamp(2.2rem, 6vw, 4.5rem);
   font-weight: 800;
   position: relative;
   user-select: none;
   flex-shrink: 0;
   line-height: 1;
-  padding: 0 clamp(1px, 0.3vw, 3px);
+  padding: 0 clamp(1px, 0.4vw, 4px);
 
   /* Metallic foil letter look */
   background: linear-gradient(
@@ -360,12 +360,12 @@ body::after {
 }
 
 .photo-frame {
-  width: clamp(150px, 28vw, 210px);
-  height: clamp(150px, 28vw, 210px);
-  border-radius: 16px;
+  width: clamp(180px, 42vw, 250px);
+  height: clamp(180px, 42vw, 250px);
+  border-radius: 18px;
   overflow: hidden;
-  box-shadow: 0 6px 18px rgba(0,0,0,0.12);
-  border: 2px solid rgba(255,255,255,0.9);
+  box-shadow: 0 8px 25px rgba(0,0,0,0.16);
+  border: 2.5px solid rgba(255,255,255,0.95);
 }
 
 .photo-frame img {
@@ -377,10 +377,10 @@ body::after {
 
 .photo-badge {
   font-family: var(--font-script);
-  font-size: clamp(1.2rem, 3.2vw, 1.6rem);
+  font-size: clamp(1.4rem, 4vw, 1.8rem);
   color: var(--red);
   font-weight: 700;
-  margin-top: 5px;
+  margin-top: 6px;
   text-shadow: 0 1px 4px rgba(255,255,255,0.8);
 }
 
@@ -601,19 +601,24 @@ body::after {
 #wish-section { display: block; }
 #close-section { display: none; margin-top: 1.5rem; }
 
-/* ===== RESPONSIVE ===== */
+/* ===== RESPONSIVE MOBILE SIZING ===== */
 @media (max-width: 768px) {
+  #hero-stage { gap: clamp(4px, 1.2vh, 10px); padding: 0.5rem; }
+  .letter-balloon { font-size: clamp(1.8rem, 6.8vw, 2.8rem); }
+  .letter-balloon.star-emoji { font-size: clamp(1.6rem, 6vw, 2.5rem); }
+  .photo-frame { width: clamp(190px, 48vw, 240px); height: clamp(190px, 48vw, 240px); }
   .wish-card, .close-card { padding: 1.6rem 1.2rem; border-radius: 22px; }
-  .photo-frame { width: clamp(130px, 26vw, 170px); height: clamp(130px, 26vw, 170px); }
 }
 
 @media (max-width: 420px) {
+  #hero-stage { gap: 4px; padding: 0.25rem; }
   .letter-balloon {
-    font-size: clamp(1.3rem, 6.5vw, 2rem);
+    font-size: clamp(1.65rem, 7.2vw, 2.2rem);
   }
   .letter-balloon.space { width: clamp(4px, 1.8vw, 8px); }
-  .letter-balloon.star-emoji { font-size: clamp(1.2rem, 5.5vw, 1.8rem); }
-  .photo-frame { width: 130px; height: 130px; }
+  .letter-balloon.star-emoji { font-size: clamp(1.5rem, 6.5vw, 2rem); }
+  .photo-frame { width: 175px; height: 175px; }
+  .photo-card { padding: 8px 8px 12px 8px; border-radius: 18px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
