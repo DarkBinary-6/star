@@ -1,0 +1,809 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy Birthday Star! 🎂✨</title>
+<meta name="description" content="A special birthday celebration for Star!">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;600;700;800&family=Quicksand:wght@400;500;600;700&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+
+:root {
+  --pink: #FF1493;
+  --pink-bright: #FF69B4;
+  --pink-soft: #FFB6C1;
+  --pink-pale: #FFD1DC;
+  --red: #FF2D55;
+  --magenta: #C71585;
+  --yellow: #FFD700;
+  --yellow-light: #FFF44F;
+  --purple: #9B59B6;
+  --teal: #00CED1;
+  --silver: #C0C0C0;
+  --silver-light: #E8E8E8;
+  --white: #FFFFFF;
+  --font-display: 'Baloo 2', cursive;
+  --font-body: 'Quicksand', sans-serif;
+  --font-script: 'Dancing Script', cursive;
+}
+
+html { overflow-x: hidden; }
+
+body {
+  font-family: var(--font-body);
+  width: 100vw;
+  min-height: 100vh;
+  overflow-x: hidden;
+  background:
+    radial-gradient(circle 5px at 20px 20px, rgba(255,255,255,0.07) 3px, transparent 4px),
+    radial-gradient(circle 5px at 56px 56px, rgba(255,255,255,0.07) 3px, transparent 4px),
+    linear-gradient(175deg, #FFD1DC 0%, #FFC0CB 15%, #FFB6C1 30%, #FF9FB5 50%, #FFB6C1 70%, #FFC0CB 85%, #FFD1DC 100%);
+  background-size: 72px 72px, 72px 72px, 100% 100%;
+  color: var(--white);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+}
+
+/* Warm glow spots */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 350px 350px at 10% 15%, rgba(255,182,193,0.3) 0%, transparent 70%),
+    radial-gradient(ellipse 300px 300px at 90% 20%, rgba(255,192,203,0.25) 0%, transparent 70%),
+    radial-gradient(ellipse 400px 400px at 50% 85%, rgba(255,182,193,0.2) 0%, transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ===== CONFETTI CANVAS ===== */
+#confetti-canvas {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 200;
+}
+
+/* ===== SMALL FLOATING BALLOONS ===== */
+#small-balloons {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 5;
+  overflow: hidden;
+}
+
+.small-balloon {
+  position: absolute;
+  bottom: -140px;
+  animation: smallFloat linear infinite;
+  will-change: transform;
+  filter: drop-shadow(0 4px 10px rgba(0,0,0,0.12));
+  pointer-events: auto;
+  cursor: pointer;
+}
+
+.small-balloon svg {
+  animation: balloonSway 3s ease-in-out infinite alternate;
+  transition: transform 0.15s ease;
+}
+
+.small-balloon:hover svg {
+  transform: scale(1.1);
+}
+
+.small-balloon.popped {
+  animation: balloonPop 0.25s ease-out forwards !important;
+  pointer-events: none;
+}
+
+@keyframes balloonPop {
+  0% { transform: scale(1); opacity: 1; }
+  40% { transform: scale(1.4); opacity: 0.6; }
+  100% { transform: scale(0); opacity: 0; }
+}
+
+@keyframes smallFloat {
+  0% { transform: translateY(0); opacity: 0; }
+  5% { opacity: 0.85; }
+  90% { opacity: 0.85; }
+  100% { transform: translateY(calc(-100vh - 200px)); opacity: 0; }
+}
+
+@keyframes balloonSway {
+  0% { transform: rotate(-7deg); }
+  100% { transform: rotate(7deg); }
+}
+
+/* ===== SILVER LETTER BALLOONS ===== */
+#letter-balloons {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 50;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: clamp(1rem, 3vh, 2.5rem);
+  pointer-events: none;
+}
+
+.letter-row {
+  display: flex;
+  justify-content: center;
+  gap: clamp(2px, 0.5vw, 6px);
+  flex-wrap: nowrap;
+}
+
+.letter-row + .letter-row {
+  margin-top: clamp(2px, 0.5vh, 6px);
+}
+
+.letter-balloon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-display);
+  font-size: clamp(2.2rem, 5.5vw, 4.5rem);
+  font-weight: 800;
+  position: relative;
+  user-select: none;
+  flex-shrink: 0;
+  line-height: 1;
+  padding: 0 clamp(1px, 0.3vw, 3px);
+
+  /* Metallic foil letter look */
+  background: linear-gradient(
+    160deg,
+    #F0F0F0 0%, #D8D8D8 12%, #E8E8E8 20%,
+    #B8B8B8 32%, #D0D0D0 44%, #A8A8A8 52%,
+    #C8C8C8 60%, #E0E0E0 72%, #B0B0B0 82%,
+    #D8D8D8 90%, #F0F0F0 100%
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  filter:
+    drop-shadow(1px 1px 0 rgba(180,180,180,0.8))
+    drop-shadow(-1px -1px 0 rgba(255,255,255,0.6))
+    drop-shadow(0 3px 6px rgba(0,0,0,0.15));
+
+  /* Start above screen */
+  transform: translateY(-120vh);
+  opacity: 0;
+  transition: transform 1.2s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.6s ease;
+}
+
+/* Inflated / puffy 3D effect via text-stroke and layered shadows */
+.letter-balloon.silver {
+  -webkit-text-stroke: 0.5px rgba(160,160,160,0.4);
+  filter:
+    drop-shadow(1px 2px 0 rgba(150,150,150,0.7))
+    drop-shadow(2px 3px 0 rgba(130,130,130,0.4))
+    drop-shadow(-1px -1px 0 rgba(255,255,255,0.8))
+    drop-shadow(0 4px 10px rgba(0,0,0,0.12));
+}
+
+/* Ribbon/string dangling below each letter */
+.letter-balloon::after {
+  content: '';
+  position: absolute;
+  bottom: -16px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 1.5px;
+  height: 16px;
+  background: linear-gradient(180deg, #C0C0C0, rgba(192,192,192,0.2));
+}
+
+.letter-balloon.space {
+  background: none !important;
+  -webkit-text-fill-color: transparent;
+  width: clamp(8px, 1.5vw, 16px);
+  filter: none !important;
+  -webkit-text-stroke: 0;
+}
+
+.letter-balloon.space::after {
+  display: none;
+}
+
+/* Dropped state */
+.letter-balloon.dropped {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+/* Gentle float once settled */
+.letter-balloon.settled {
+  animation: gentleFloat 3s ease-in-out infinite;
+}
+
+@keyframes gentleFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+
+/* Star emoji at the end */
+.letter-balloon.star-emoji {
+  background: none !important;
+  -webkit-text-fill-color: var(--yellow);
+  font-size: clamp(2rem, 5vw, 4rem);
+  filter: drop-shadow(0 0 10px rgba(255,215,0,0.5)) drop-shadow(0 3px 6px rgba(0,0,0,0.1)) !important;
+  -webkit-text-stroke: 0;
+}
+
+.letter-balloon.star-emoji::after {
+  display: none;
+}
+
+/* ===== POPPER BURST PARTICLES ===== */
+.pop-particle {
+  position: fixed;
+  pointer-events: none;
+  z-index: 190;
+  animation: popFly 0.9s ease-out forwards;
+}
+
+.pop-particle.emoji {
+  background: none !important;
+  font-size: 1.3rem;
+}
+
+@keyframes popFly {
+  0% { transform: translate(0,0) scale(1) rotate(0); opacity: 1; }
+  100% { transform: translate(var(--tx), var(--ty)) scale(0.2) rotate(var(--rot)); opacity: 0; }
+}
+
+/* ===== CONTENT AREA ===== */
+#content {
+  position: relative;
+  z-index: 10;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /* Push below the letter balloons */
+  margin-top: clamp(110px, 22vh, 200px);
+  padding: 0 1rem 3rem;
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 1s ease, transform 1s ease;
+}
+
+#content.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ===== WISH CARD ===== */
+.wish-card {
+  background: rgba(255,255,255,0.25);
+  border: 1px solid rgba(255,255,255,0.4);
+  border-radius: 28px;
+  padding: clamp(2rem, 5vw, 3rem) clamp(1.5rem, 4vw, 2.5rem);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  max-width: 680px;
+  width: 100%;
+  text-align: center;
+  box-shadow: 0 12px 50px rgba(0,0,0,0.08);
+  position: relative;
+  overflow: hidden;
+}
+
+.wish-card::before {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border-radius: 30px;
+  background: linear-gradient(135deg, rgba(255,215,0,0.3), transparent 35%, rgba(255,105,180,0.3), transparent 65%, rgba(255,215,0,0.3));
+  background-size: 300% 300%;
+  animation: borderShimmer 5s ease-in-out infinite;
+  z-index: -1;
+}
+
+@keyframes borderShimmer {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+.wish-emojis {
+  font-size: clamp(1.8rem, 5vw, 3rem);
+  margin-bottom: 1rem;
+  letter-spacing: 0.3rem;
+}
+
+.wish-heading {
+  font-family: var(--font-display);
+  font-size: clamp(1.5rem, 4.5vw, 2.5rem);
+  font-weight: 800;
+  color: var(--pink);
+  margin-bottom: 1rem;
+  line-height: 1.3;
+  text-shadow: 0 2px 8px rgba(255,20,147,0.15);
+}
+
+.wish-text {
+  font-size: clamp(0.9rem, 2vw, 1.05rem);
+  color: rgba(80,20,50,0.8);
+  line-height: 1.8;
+  margin-bottom: 0.8rem;
+}
+
+.wish-text strong {
+  color: var(--pink);
+}
+
+.continue-btn {
+  display: inline-block;
+  margin-top: 0.8rem;
+  padding: 0.75rem 2.5rem;
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--white);
+  background: linear-gradient(135deg, var(--pink), var(--magenta));
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 20px rgba(255,20,147,0.25);
+}
+
+.continue-btn:hover {
+  transform: scale(1.08);
+  box-shadow: 0 8px 30px rgba(255,20,147,0.4);
+}
+
+.continue-btn:active { transform: scale(0.95); }
+
+/* ===== CLOSING CARD ===== */
+.close-card {
+  background: rgba(255,255,255,0.25);
+  border: 1px solid rgba(255,255,255,0.4);
+  border-radius: 28px;
+  padding: clamp(2rem, 5vw, 3rem) clamp(1.5rem, 4vw, 2.5rem);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  max-width: 680px;
+  width: 100%;
+  text-align: center;
+  box-shadow: 0 12px 50px rgba(0,0,0,0.08);
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 1s ease, transform 1s ease;
+}
+
+.close-card.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.close-emoji {
+  font-size: clamp(2.5rem, 7vw, 4rem);
+  margin-bottom: 1rem;
+}
+
+.close-heading {
+  font-family: var(--font-display);
+  font-size: clamp(1.3rem, 3.5vw, 1.8rem);
+  font-weight: 700;
+  color: var(--pink);
+  margin-bottom: 1rem;
+  line-height: 1.4;
+}
+
+.close-text {
+  font-size: clamp(0.95rem, 2.2vw, 1.1rem);
+  color: rgba(80,20,50,0.75);
+  line-height: 1.8;
+  margin-bottom: 1rem;
+}
+
+.gift-box {
+  display: inline-block;
+  background: rgba(255,255,255,0.3);
+  border: 1px solid rgba(255,105,180,0.25);
+  border-radius: 18px;
+  padding: 1.2rem 2rem;
+  margin: 0.5rem 0 1rem;
+}
+
+.gift-box p {
+  font-family: var(--font-script);
+  font-size: clamp(1.1rem, 3vw, 1.6rem);
+  color: var(--pink);
+  line-height: 1.6;
+}
+
+.gift-box .gold { color: var(--yellow); text-shadow: 0 1px 6px rgba(255,215,0,0.3); }
+.gift-box .rose { color: var(--pink); }
+
+.signature {
+  font-size: 0.85rem;
+  color: rgba(100,40,60,0.45);
+  font-style: italic;
+  margin-top: 1rem;
+}
+
+.signature span {
+  color: var(--pink);
+  font-style: normal;
+  font-weight: 700;
+}
+
+/* ===== HIDE SECTIONS ===== */
+#wish-section { display: block; }
+#close-section { display: none; margin-top: 1.5rem; }
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+  .wish-card, .close-card { padding: 1.6rem 1.2rem; border-radius: 22px; }
+  #content { margin-top: clamp(100px, 20vh, 170px); }
+}
+
+@media (max-width: 420px) {
+  .letter-balloon {
+    font-size: clamp(1.5rem, 7vw, 2.2rem);
+  }
+  .letter-balloon.space { width: clamp(5px, 2vw, 10px); }
+  .letter-balloon.star-emoji { font-size: clamp(1.4rem, 6vw, 2rem); }
+  #content { margin-top: clamp(90px, 20vh, 140px); }
+}
+
+@media (max-width: 340px) {
+  .letter-balloon {
+    font-size: 1.3rem;
+  }
+  .letter-balloon.space { width: 5px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+  .small-balloon { display: none; }
+}
+</style>
+</head>
+<body>
+
+<canvas id="confetti-canvas"></canvas>
+<div id="small-balloons" aria-hidden="true"></div>
+
+<!-- SILVER LETTER BALLOONS -->
+<div id="letter-balloons" aria-hidden="true">
+  <div class="letter-row" id="row-happy">
+    <div class="letter-balloon silver">H</div>
+    <div class="letter-balloon silver">A</div>
+    <div class="letter-balloon silver">P</div>
+    <div class="letter-balloon silver">P</div>
+    <div class="letter-balloon silver">Y</div>
+  </div>
+  <div class="letter-row" id="row-birthday">
+    <div class="letter-balloon silver">B</div>
+    <div class="letter-balloon silver">I</div>
+    <div class="letter-balloon silver">R</div>
+    <div class="letter-balloon silver">T</div>
+    <div class="letter-balloon silver">H</div>
+    <div class="letter-balloon silver">D</div>
+    <div class="letter-balloon silver">A</div>
+    <div class="letter-balloon silver">Y</div>
+  </div>
+  <div class="letter-row" id="row-star">
+    <div class="letter-balloon star-emoji">⭐</div>
+    <div class="letter-balloon silver">S</div>
+    <div class="letter-balloon silver">T</div>
+    <div class="letter-balloon silver">A</div>
+    <div class="letter-balloon silver">R</div>
+    <div class="letter-balloon star-emoji">⭐</div>
+  </div>
+</div>
+
+<!-- CONTENT: WISHES + CLOSING -->
+<div id="content">
+
+  <!-- WISH SECTION -->
+  <div id="wish-section">
+    <div class="wish-card">
+      <div class="wish-emojis">🎉🥳🎂✨🎈</div>
+      <h1 class="wish-heading">Happy Birthday, Star! 🎉</h1>
+      <p class="wish-text">
+        Here's to another year of <strong>chaos</strong>, <strong>laughs</strong>,
+        and <strong>legendary moments</strong> together!
+      </p>
+      <p class="wish-text">
+        May this year bring you everything you've been wishing for — and all the things
+        you didn't even know you needed. Keep being unapologetically <strong>you</strong>,
+        because the world is genuinely better with Star in it. 🌟
+      </p>
+      <p class="wish-text">
+        Go eat too much cake, dance like nobody's watching, and have the most amazing birthday ever! 🕺🎶
+      </p>
+      <button class="continue-btn" id="btn-continue">Continue ➜</button>
+    </div>
+  </div>
+
+  <!-- CLOSE SECTION (hidden initially) -->
+  <div id="close-section">
+    <div class="close-card" id="close-card">
+      <div class="close-emoji">🎁</div>
+      <h2 class="close-heading">One more thing…</h2>
+      <p class="close-text">
+        I don't have any gifts to give you —<br>
+        no fancy boxes, no wrapped surprises.
+      </p>
+      <div class="gift-box">
+        <p>But I give you all my <span class="gold">wishes</span><br>
+        and my <span class="rose">friendship</span> 🤝</p>
+      </div>
+      <p class="close-text">
+        And honestly? That's the <strong>realest thing</strong> I've got.<br>
+        Happy Birthday, <strong>Star</strong>. Today and always. ⭐
+      </p>
+      <p class="signature">
+        — Your friend, with <span>pure friendship energy</span> ☕✨
+      </p>
+    </div>
+  </div>
+
+</div>
+
+<script>
+const $ = s => document.querySelector(s);
+const $$ = s => document.querySelectorAll(s);
+
+// ===== CONFETTI ENGINE =====
+const canvas = $('#confetti-canvas');
+const ctx = canvas.getContext('2d');
+let cW, cH;
+function resize() { cW = canvas.width = innerWidth; cH = canvas.height = innerHeight; }
+resize();
+addEventListener('resize', resize);
+
+const COLORS = ['#FFD700','#FF69B4','#FFF44F','#FF1493','#00CED1','#9B59B6','#FF2D55','#C0C0C0','#FFFFFF','#FF8C00','#40E0D0'];
+let parts = [];
+let animating = false;
+
+class Piece {
+  constructor(x, y, spread) {
+    this.x = x; this.y = y;
+    this.w = 4 + Math.random() * 9;
+    this.h = 3 + Math.random() * 6;
+    this.color = COLORS[Math.random() * COLORS.length | 0];
+    const a = Math.random() * Math.PI * 2;
+    const sp = 3 + Math.random() * spread;
+    this.vx = Math.cos(a) * sp;
+    this.vy = Math.sin(a) * sp - 2 - Math.random() * 4;
+    this.g = 0.09 + Math.random() * 0.05;
+    this.drag = 0.985;
+    this.rot = Math.random() * 360;
+    this.rs = (Math.random() - 0.5) * 14;
+    this.o = 1;
+    this.fd = 0.003 + Math.random() * 0.005;
+    this.sh = Math.random();
+  }
+  update() { this.vy += this.g; this.vx *= this.drag; this.vy *= this.drag; this.x += this.vx; this.y += this.vy; this.rot += this.rs; this.o -= this.fd; }
+  draw() {
+    ctx.save(); ctx.translate(this.x, this.y); ctx.rotate(this.rot * Math.PI / 180);
+    ctx.globalAlpha = Math.max(0, this.o); ctx.fillStyle = this.color;
+    if (this.sh < 0.35) ctx.fillRect(-this.w/2, -this.h/2, this.w, this.h);
+    else if (this.sh < 0.65) { ctx.beginPath(); ctx.arc(0,0,this.w/3,0,Math.PI*2); ctx.fill(); }
+    else { ctx.beginPath(); ctx.moveTo(0,-this.w/2); ctx.lineTo(this.w/3,this.w/3); ctx.lineTo(-this.w/3,this.w/3); ctx.closePath(); ctx.fill(); }
+    ctx.restore();
+  }
+}
+
+function burst(x, y, n, sp) { for (let i = 0; i < n; i++) parts.push(new Piece(x, y, sp)); if (!animating) runAnim(); }
+function runAnim() {
+  animating = true; ctx.clearRect(0,0,cW,cH);
+  parts = parts.filter(p => p.o > 0);
+  for (const p of parts) { p.update(); p.draw(); }
+  if (parts.length) requestAnimationFrame(runAnim);
+  else { ctx.clearRect(0,0,cW,cH); animating = false; }
+}
+
+// ===== PARTY POPPER BURST =====
+function popperBurst(x, y) {
+  burst(x, y, 120, 9);
+  const emojis = ['🎉','🎊','🎈','🥳','⭐','✨','🎁','🎶','🪅','🍰'];
+  for (let i = 0; i < 12; i++) {
+    const el = document.createElement('span');
+    el.className = 'pop-particle emoji';
+    el.textContent = emojis[Math.random() * emojis.length | 0];
+    el.style.left = x + 'px';
+    el.style.top = y + 'px';
+    el.style.setProperty('--tx', (Math.random()-0.5)*260 + 'px');
+    el.style.setProperty('--ty', -(Math.random()*180+50) + 'px');
+    el.style.setProperty('--rot', (Math.random()-0.5)*720 + 'deg');
+    document.body.appendChild(el);
+    setTimeout(() => el.remove(), 1000);
+  }
+  for (let i = 0; i < 18; i++) {
+    const r = document.createElement('div');
+    r.className = 'pop-particle';
+    r.style.left = x + 'px';
+    r.style.top = y + 'px';
+    r.style.width = (3+Math.random()*7) + 'px';
+    r.style.height = (4+Math.random()*10) + 'px';
+    r.style.borderRadius = '2px';
+    r.style.background = COLORS[Math.random()*COLORS.length|0];
+    r.style.setProperty('--tx', (Math.random()-0.5)*320 + 'px');
+    r.style.setProperty('--ty', -(Math.random()*200+30) + 'px');
+    r.style.setProperty('--rot', (Math.random()-0.5)*1080 + 'deg');
+    document.body.appendChild(r);
+    setTimeout(() => r.remove(), 1000);
+  }
+}
+
+// ===== SMALL FLOATING BALLOONS =====
+const smallContainer = $('#small-balloons');
+const balloonColors = [
+  { body:'#FF1493', shine:'#FF8EC7' }, { body:'#FFD700', shine:'#FFF4A3' },
+  { body:'#FF69B4', shine:'#FFAED7' }, { body:'#9B59B6', shine:'#CDA4DE' },
+  { body:'#00CED1', shine:'#7FFFFF' }, { body:'#FF2D55', shine:'#FF7A94' },
+  { body:'#C0C0C0', shine:'#E8E8E8' }, { body:'#FFC0CB', shine:'#FFE0E8' },
+];
+
+function bSvg(c) {
+  return `<svg width="44" height="62" viewBox="0 0 44 62" fill="none">
+    <defs><radialGradient id="g${c.body.replace('#','')}" cx="35%" cy="28%" r="65%">
+      <stop offset="0%" stop-color="${c.shine}"/><stop offset="100%" stop-color="${c.body}"/>
+    </radialGradient></defs>
+    <ellipse cx="22" cy="24" rx="18" ry="24" fill="url(#g${c.body.replace('#','')})"/>
+    <ellipse cx="15" cy="15" rx="5" ry="7" fill="white" opacity="0.2" transform="rotate(-25 15 15)"/>
+    <polygon points="22,47 19,53 25,53" fill="${c.body}"/>
+    <path d="M22 53 Q19 57 22 61 Q25 57 22 53" stroke="${c.body}" stroke-width="1" fill="none" opacity="0.3"/>
+  </svg>`;
+}
+
+function spawnSmall() {
+  const b = document.createElement('div');
+  b.className = 'small-balloon';
+  const c = balloonColors[Math.random()*balloonColors.length|0];
+  b.innerHTML = bSvg(c);
+  b.style.left = Math.random()*95 + '%';
+  const d = 8 + Math.random()*10;
+  b.style.animationDuration = d + 's';
+  b.style.animationDelay = Math.random()*1 + 's';
+  const s = 0.5 + Math.random()*0.55;
+  b.querySelector('svg').style.transform = `scale(${s})`;
+
+  // Click/tap to pop!
+  b.addEventListener('click', (e) => {
+    e.stopPropagation();
+    if (b.classList.contains('popped')) return;
+    b.classList.add('popped');
+    const rect = b.getBoundingClientRect();
+    const bx = rect.left + rect.width / 2;
+    const by = rect.top + rect.height / 2;
+    burst(bx, by, 25, 5);
+    // Emoji pop
+    const popEmojis = ['💥','✨','🎈','⭐','🎉'];
+    for (let i = 0; i < 4; i++) {
+      const em = document.createElement('span');
+      em.className = 'pop-particle emoji';
+      em.textContent = popEmojis[Math.random()*popEmojis.length|0];
+      em.style.left = bx + 'px';
+      em.style.top = by + 'px';
+      em.style.setProperty('--tx', (Math.random()-0.5)*160 + 'px');
+      em.style.setProperty('--ty', -(Math.random()*120+30) + 'px');
+      em.style.setProperty('--rot', (Math.random()-0.5)*540 + 'deg');
+      document.body.appendChild(em);
+      setTimeout(() => em.remove(), 1000);
+    }
+    setTimeout(() => b.remove(), 300);
+  });
+
+  smallContainer.appendChild(b);
+  setTimeout(() => b.remove(), (d+2)*1000);
+}
+
+// ===== BIRTHDAY SONG =====
+function playSong() {
+  const ac = new (window.AudioContext || window.webkitAudioContext)();
+  const master = ac.createGain();
+  master.gain.value = 0.08;
+  master.connect(ac.destination);
+  const notes = [
+    [262,0.3],[262,0.3],[294,0.6],[262,0.6],[349,0.6],[330,1.0],
+    [262,0.3],[262,0.3],[294,0.6],[262,0.6],[392,0.6],[349,1.0],
+    [262,0.3],[262,0.3],[523,0.6],[440,0.6],[349,0.6],[330,0.6],[294,0.8],
+    [466,0.3],[466,0.3],[440,0.6],[349,0.6],[392,0.6],[349,1.0],
+  ];
+  let t = ac.currentTime + 0.1;
+  for (const [freq, dur] of notes) {
+    const osc = ac.createOscillator();
+    const g = ac.createGain();
+    osc.type = 'triangle';
+    osc.frequency.value = freq;
+    osc.connect(g); g.connect(master);
+    g.gain.setValueAtTime(0.1, t);
+    g.gain.exponentialRampToValueAtTime(0.001, t + dur - 0.04);
+    osc.start(t); osc.stop(t + dur);
+    t += dur;
+  }
+}
+
+// ===== MAIN SEQUENCE =====
+const wait = ms => new Promise(r => setTimeout(r, ms));
+
+async function run() {
+  const letters = $$('.letter-balloon');
+
+  // Start small balloons — lots of them!
+  for (let i = 0; i < 15; i++) setTimeout(spawnSmall, i * 250);
+  setInterval(spawnSmall, 900);
+
+  // Drop letter balloons one by one (staggered)
+  await wait(400);
+
+  for (let i = 0; i < letters.length; i++) {
+    const el = letters[i];
+    if (el.classList.contains('space')) {
+      el.classList.add('dropped');
+      continue;
+    }
+    setTimeout(() => {
+      el.classList.add('dropped');
+    }, i * 80);
+  }
+
+  // Wait for all to land
+  await wait(letters.length * 80 + 1200);
+
+  // Party poppers burst from corners!
+  popperBurst(60, 120);
+  popperBurst(cW - 60, 120);
+  await wait(300);
+  popperBurst(cW / 2, 80);
+  await wait(200);
+  popperBurst(cW * 0.25, cH * 0.3);
+  popperBurst(cW * 0.75, cH * 0.3);
+
+  // Play birthday song
+  playSong();
+
+  // Settle animation on letters
+  letters.forEach((el, i) => {
+    setTimeout(() => el.classList.add('settled'), i * 50);
+  });
+
+  // Show wishes
+  await wait(800);
+  $('#content').classList.add('visible');
+
+  // Continue button
+  $('#btn-continue').addEventListener('click', () => {
+    // Pop confetti on click
+    burst(cW/2, cH/2, 80, 7);
+    popperBurst(cW * 0.3, cH * 0.5);
+    popperBurst(cW * 0.7, cH * 0.5);
+
+    // Hide wish, show close
+    $('#wish-section').style.display = 'none';
+    const closeSection = $('#close-section');
+    closeSection.style.display = 'block';
+
+    setTimeout(() => {
+      $('#close-card').classList.add('visible');
+    }, 100);
+  });
+}
+
+run();
+</script>
+
+</body>
+</html>
